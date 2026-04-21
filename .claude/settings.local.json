@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//tmp/**)",
+      "Bash(cp -f \"c:/Users/16708/Desktop/Multimedia-Transformer/paper/2026_MER_challenge/website-claude/index.html\" /tmp/mer-temp/index.html)",
+      "Bash(cp -rf \"c:/Users/16708/Desktop/Multimedia-Transformer/paper/2026_MER_challenge/website-claude/css/.\" /tmp/mer-temp/css/)",
+      "Bash(cp -rf \"c:/Users/16708/Desktop/Multimedia-Transformer/paper/2026_MER_challenge/website-claude/img/.\" /tmp/mer-temp/img/)",
+      "Bash(cp -rf \"c:/Users/16708/Desktop/Multimedia-Transformer/paper/2026_MER_challenge/website-claude/js/.\" /tmp/mer-temp/js/)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MER2026 Challenge and MRAC2026 Workshop @ ACM Multimedia 2026">
+  <title>MER2026 Challenge &amp; MRAC2026 Workshop</title>
+
+  <style>
+    /* ── Reset & Base ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f172a;
+      --dark:   #1e293b;
+      --mid:    #334155;
+      --muted:  #64748b;
+      --light:  #f1f5f9;
+      --white:  #ffffff;
+      --sky:    #0ea5e9;
+      --teal:   #14b8a6;
+      --indigo: #6366f1;
+      --amber:  #f59e0b;
+      --rose:   #f43f5e;
+      --green:  #22c55e;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.08);
+      --shadow-lg: 0 8px 40px rgba(0,0,0,.14);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--mid);
+      background: var(--white);
+      zoom: 1.5;
+    }
+
+    a { color: var(--sky); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--teal); }
+
+    img { max-width: 100%; display: block; }
+
+    h1,h2,h3,h4 { font-weight: 700; color: var(--navy); line-height: 1.3; }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── Navbar ───────────────────────────────────────── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(15,23,42,.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: box-shadow .3s;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .03em;
+    }
+    .nav-brand span { color: var(--sky); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,.75);
+      font-size: .88rem;
+      font-weight: 500;
+      padding: 6px 11px;
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.1); }
+
+    /* Previous dropdown */
+    .nav-dropdown { position: relative; }
+    .nav-dropdown > a::after { content: " ▾"; font-size: .7rem; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      background: var(--dark);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: var(--radius);
+      min-width: 180px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 10px 16px;
+      border-radius: 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      white-space: nowrap;
+    }
+    .nav-dropdown-menu a:last-child { border-bottom: none; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: .3s;
+    }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f3460 100%);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative blobs */
+    #hero::before {
+      content: "";
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,165,233,.18) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    #hero::after {
+      content: "";
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99,102,241,.15) 0%, transparent 70%);
+      bottom: -80px; left: 10%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    #hero .container {
+      max-width: 100%;
+      padding: 0 40px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(14,165,233,.2);
+      border: 1px solid rgba(14,165,233,.4);
+      color: #7dd3fc;
+      font-size: 1.23rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 7.5vw, 5.1rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero-title .accent { color: var(--sky); }
+
+    .hero-sub {
+      font-size: 1.65rem;
+      color: rgba(255,255,255,.65);
+      max-width: 820px;
+      margin-bottom: 36px;
+    }
+
+    .hero-buttons { display: flex; gap: 10px; flex-wrap: nowrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.32rem;
+      cursor: pointer;
+      transition: all .22s;
+      border: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--sky);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: #0284c7; color: var(--white); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(255,255,255,.3);
+      color: var(--white);
+    }
+    .btn-outline:hover { border-color: var(--white); color: var(--white); background: rgba(255,255,255,.08); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 40px; right: 0; left: 0;
+      z-index: 1;
+    }
+    .hero-stats .container {
+      display: flex;
+      gap: 40px;
+      justify-content: flex-end;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 1.17rem;
+      color: rgba(255,255,255,.5);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 4px;
+    }
+
+    /* ── Section base ─────────────────────────────────── */
+    section { padding: 64px 0; }
+
+    .section-label {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      margin-bottom: 14px;
+    }
+
+    .section-line {
+      width: 48px; height: 4px;
+      background: linear-gradient(90deg, var(--sky), var(--teal));
+      border-radius: 2px;
+      margin-bottom: 32px;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* ── News ─────────────────────────────────────────── */
+    #news { background: var(--light); }
+
+    .news-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .news-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--sky);
+    }
+
+    .news-date {
+      white-space: nowrap;
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--sky);
+      min-width: 110px;
+      padding-top: 2px;
+    }
+
+    .news-text {
+      font-size: .97rem;
+      color: var(--mid);
+    }
+
+    /* ── Challenge ────────────────────────────────────── */
+    #challenge { background: var(--white); }
+
+    .tracks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .track-card {
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .track-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .track-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .track-icon {
+      width: 46px; height: 46px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .track-1 .track-icon { background: #eff6ff; }
+    .track-2 .track-icon { background: #f0fdf4; }
+    .track-3 .track-icon { background: #fdf4ff; }
+    .track-4 .track-icon { background: #fff7ed; }
+
+    .track-1 { border-top: 3px solid var(--sky); }
+    .track-2 { border-top: 3px solid var(--green); }
+    .track-3 { border-top: 3px solid var(--indigo); }
+    .track-4 { border-top: 3px solid var(--amber); }
+
+    .track-num {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 2px;
+    }
+    .track-1 .track-num { color: var(--sky); }
+    .track-2 .track-num { color: var(--green); }
+    .track-3 .track-num { color: var(--indigo); }
+    .track-4 .track-num { color: var(--amber); }
+
+    .track-header h3 { font-size: 1.05rem; margin: 0; }
+
+    .track-body { padding: 20px 24px; }
+
+    .track-body p { font-size: .95rem; color: var(--mid); margin-bottom: 14px; }
+
+    .track-fig {
+      margin: 14px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+      text-align: center;
+    }
+    .track-fig img { width: 100%; }
+    .track-fig figcaption {
+      font-size: .8rem;
+      color: var(--muted);
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    .tag-blue   { background:#eff6ff; color:#2563eb; }
+    .tag-green  { background:#f0fdf4; color:#15803d; }
+    .tag-purple { background:#fdf4ff; color:#7e22ce; }
+    .tag-amber  { background:#fffbeb; color:#b45309; }
+
+    .challenge-links {
+      background: var(--light);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+    }
+    .challenge-links h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--navy); }
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .link-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1px solid #e2e8f0;
+      font-size: .92rem;
+      color: var(--mid);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .link-item:hover { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,.08); }
+    .link-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .link-label { font-weight: 600; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+    .link-value { color: var(--sky); font-size: .88rem; word-break: break-all; }
+
+    .ref-block {
+      margin-top: 32px;
+      padding: 20px 24px;
+      background: #f8fafc;
+      border-radius: var(--radius);
+      border: 1px solid #e2e8f0;
+    }
+    .ref-block p { font-size: .88rem; color: var(--muted); margin-bottom: 6px; }
+    .ref-block p:last-child { margin-bottom: 0; }
+
+    /* ── Workshop ─────────────────────────────────────── */
+    #workshop { background: var(--light); }
+
+    .workshop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .info-card h3 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-card ul {
+      padding-left: 20px;
+      color: var(--mid);
+      font-size: .94rem;
+    }
+    .info-card ul li { margin-bottom: 7px; }
+    .info-card p { font-size: .94rem; color: var(--mid); margin-bottom: 10px; }
+
+    .workshop-cta {
+      background: linear-gradient(135deg, var(--navy), #1e3a5f);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .workshop-cta h3 { color: var(--white); font-size: 1.2rem; margin-bottom: 6px; }
+    .workshop-cta p { color: rgba(255,255,255,.65); font-size: .94rem; margin: 0; }
+
+    /* ── Schedule ─────────────────────────────────────── */
+    #schedule { background: var(--white); }
+
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+      max-width: 860px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 9px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--sky), var(--teal));
+      border-radius: 2px;
+    }
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 28px;
+    }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -27px;
+      top: 7px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 2px solid var(--sky);
+    }
+    .tl-item.done::before { background: var(--sky); }
+
+    .tl-date {
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--sky);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      margin-bottom: 3px;
+    }
+    .tl-text {
+      font-size: 1rem;
+      color: var(--mid);
+      font-weight: 500;
+    }
+
+    /* ── Speakers ─────────────────────────────────────── */
+    #speakers { background: var(--light); }
+
+    .speakers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .speaker-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .25s, box-shadow .25s;
+      border: 1px solid #e2e8f0;
+    }
+    .speaker-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .speaker-avatar {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 14px;
+      border: 3px solid #e2e8f0;
+    }
+    .speaker-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .speaker-role {
+      font-size: .82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Organizers ───────────────────────────────────── */
+    #organization { background: var(--white); }
+
+    .org-group { margin-bottom: 56px; }
+    .org-group:last-child { margin-bottom: 0; }
+
+    .org-group-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .org-group-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    .org-card {
+      text-align: center;
+      border-radius: var(--radius);
+      padding: 22px 14px;
+      border: 1px solid #e2e8f0;
+      background: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .org-card:hover { border-color: var(--sky); box-shadow: 0 0 0 3px rgba(14,165,233,.08); }
+
+    .org-avatar {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 12px;
+      border: 2px solid #e2e8f0;
+    }
+
+    .org-name {
+      font-size: .92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .org-affil {
+      font-size: .78rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Acknowledgement ─────────────────────────────────── */
+    #acknowledgement { background: var(--light); }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.45);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: .85rem;
+    }
+    footer a { color: rgba(255,255,255,.6); }
+    footer a:hover { color: var(--white); }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: var(--navy); padding: 12px 0; }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: flex; }
+      .nav-dropdown-menu { position: static; box-shadow: none; border: none; background: rgba(255,255,255,.04); }
+
+      .tracks-grid { grid-template-columns: 1fr; }
+      .workshop-grid { grid-template-columns: 1fr; }
+      .hero-stats .container { justify-content: center; gap: 24px; }
+      .container { padding: 0 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ── Navbar ──────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <span class="nav-brand">MER<span>2026</span></span>
+
+    <ul class="nav-links" id="navLinks">
+      <li class="nav-dropdown">
+        <a href="#">Previous</a>
+        <div class="nav-dropdown-menu">
+          <a href="http://merchallenge.cn/" target="_blank">MER2023 @ MM</a>
+          <a href="https://zeroqiaoba.github.io/MER2024-website/" target="_blank">MER2024 @ IJCAI</a>
+          <a href="https://zeroqiaoba.github.io/MER2025-website/" target="_blank">MER2025 @ MM</a>
+        </div>
+      </li>
+      <li><a href="#introduction">Intro</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#challenge">Challenge</a></li>
+      <li><a href="#workshop">Workshop</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#speakers">Speakers</a></li>
+      <li><a href="#organization">Organizers</a></li>
+      <li><a href="#acknowledgement">Acknowledgement</a></li>
+    </ul>
+
+    <div class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ── Hero ────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-badge">ACM Multimedia 2026 · Rio de Janeiro, Brazil</span>
+      <h1 class="hero-title">
+        MER2026 Challenge<br>
+        &amp; <span class="accent">MRAC2026 Workshop</span>
+      </h1>
+      <p class="hero-sub">
+        From Discriminative Emotion Recognition to Generative Emotion Understanding —
+        the 4th edition of the MER series, featuring four new tracks.
+      </p>
+      <div class="hero-buttons">
+        <a href="#challenge" class="btn btn-primary">Explore Tracks</a>
+        <a href="https://github.com/zeroQiaoba/MERTools" target="_blank" class="btn btn-outline">Baseline Code</a>
+        <span class="btn btn-outline" style="opacity:.6; cursor:default;">Baseline Paper (Coming Soon)</span>
+        <span class="btn btn-outline" style="opacity:.6; cursor:default;">Paper Submission (Coming Soon)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="container">
+      <div class="stat-item">
+        <div class="stat-num">4th</div>
+        <div class="stat-label">Edition</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Tracks</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Nov 2026</div>
+        <div class="stat-label">Rio de Janeiro</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Introduction ────────────────────────────────────── -->
+<section id="introduction">
+  <div class="container">
+    <span class="section-label">About</span>
+    <h2 class="section-title">What is MER2026?</h2>
+    <div class="section-line"></div>
+    <p class="section-desc">
+      <strong>MER2026</strong> marks the fourth edition of the MER series of challenges.
+      The MER series provides valuable data resources to the research community and offers tasks centered on recent research trends,
+      establishing itself as one of the largest challenges in the field.
+      Throughout its history, the focus of MER has shifted from <em>discriminative emotion recognition</em> to
+      <em>generative emotion understanding</em>.
+      Specifically, MER2023 concentrated on <em>discriminative emotion recognition</em>, restricting the scope to fixed basic labels.
+      In MER2024 and MER2025, we transitioned to <em>generative emotion understanding</em>, leveraging the extensive vocabulary and
+      multimodal understanding capabilities of MLLMs to facilitate fine-grained and explainable emotion recognition.
+      Building on this trajectory, MER2026 contains four tracks:
+      <strong>MER-Cross</strong>, <strong>MER-FG</strong>, <strong>MER-Prefer</strong>, and <strong>MER-PS</strong>.
+      <br><br>
+      Contact: <a href="mailto:merchallenge.contact@gmail.com">merchallenge.contact@gmail.com</a>
+      &nbsp;·&nbsp; <a href="mailto:lianzheng@tongji.edu.cn">lianzheng@tongji.edu.cn</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ── News ────────────────────────────────────────────── -->
+<section id="news">
+  <div class="container">
+    <span class="section-label">Updates</span>
+    <h2 class="section-title">News</h2>
+    <div class="section-line"></div>
+
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">Apr 20, 2026</span>
+        <span class="news-text">We establish an initial website for <strong>MER2026 Challenge</strong> and <strong>MRAC2026 Workshop</strong>.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Challenge ───────────────────────────────────────── -->
+<section id="challenge">
+  <div class="container">
+    <span class="section-label">MER26 Challenge @ ACM MM</span>
+    <h2 class="section-title">Four Challenge Tracks</h2>
+    <div class="section-line"></div>
+
+
+    <div class="tracks-grid">
+
+      <!-- Track 1 -->
+      <div class="track-card track-1">
+        <div class="track-header">
+          <div class="track-icon">🗣️</div>
+          <div>
+            <div class="track-num">Track 1</div>
+            <h3>MER-Cross: Interlocutor Emotion</h3>
+          </div>
+        </div>
+        <div class="track-body">
+          <p>
+            A newly introduced track that shifts focus from individual scenarios to <strong>dyadic interactions</strong>.
+            When speaker <em>s₁</em> is talking, MER-Cross targets the emotion of the listening <em>s₂</em> (interlocutor)
+            rather than the speaker, enabling capture of both sides of a conversation.
+          </p>
+          <figure class="track-fig">
+            <img src="./img/track1.png" alt="MER-Cross illustration">
+            <figcaption>MER-Cross: predicting the interlocutor's emotion in dyadic interactions.</figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <!-- Track 2 -->
+      <div class="track-card track-2">
+        <div class="track-header">
+          <div class="track-icon">🔍</div>
+          <div>
+            <div class="track-num">Track 2</div>
+            <h3>MER-FG: Fine-grained Emotion</h3>
+          </div>
+        </div>
+        <div class="track-body">
+          <p>
+            Human emotion extends far beyond basic labels. In this track, participants can predict
+            <strong>any number of emotion labels</strong> across diverse categories,
+            expanding recognition scope from basic to more nuanced emotions.
+          </p>
+          <figure class="track-fig">
+            <img src="./img/track2.png" alt="MER-FG illustration">
+            <figcaption>MER-FG: open-vocabulary emotion recognition beyond basic categories.</figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <!-- Track 3 -->
+      <div class="track-card track-3">
+        <div class="track-header">
+          <div class="track-icon">⚖️</div>
+          <div>
+            <div class="track-num">Track 3</div>
+            <h3>MER-Prefer: Emotion Preference</h3>
+          </div>
+        </div>
+        <div class="track-body">
+          <p>
+            A newly introduced track predicting which of two emotion descriptions is preferred by human annotators for a given video —
+            a critical component for training reward models in emotion understanding.
+          </p>
+          <figure class="track-fig">
+            <img src="./img/track3.png" alt="MER-Prefer illustration">
+            <figcaption>MER-Prefer: determine which emotion description humans prefer.</figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+      <!-- Track 4 -->
+      <div class="track-card track-4">
+        <div class="track-header">
+          <div class="track-icon">🧠</div>
+          <div>
+            <div class="track-num">Track 4</div>
+            <h3>MER-PS: Physiological Signal Emotion</h3>
+          </div>
+        </div>
+        <div class="track-body">
+          <p>
+            Shifts emotion recognition from observable behaviors to <strong>physiological evidence</strong>.
+            Using synchronized EEG (64-ch, 1000 Hz) and fNIRS (51-ch, 47.62 Hz) signals from 30 participants
+            watching 15 emotion-eliciting video clips.
+          </p>
+          <p>
+            A key feature is <em>real-time dynamic emotion annotation</em> — subjects continuously report valence and arousal via joystick at 1 Hz.
+            The goal is to estimate the <strong>valence–arousal trajectory</strong> from brain signals.
+          </p>
+
+        </div>
+      </div>
+
+    </div><!-- /tracks-grid -->
+
+    <!-- Links block -->
+    <div class="challenge-links">
+      <h3>Resources &amp; Submission</h3>
+      <div class="link-grid">
+        <div class="link-item">
+          <span class="link-icon">📄</span>
+          <div>
+            <div class="link-label">Baseline Paper</div>
+            <span class="link-value" style="color:var(--muted);">Coming soon</span>
+          </div>
+        </div>
+        <div class="link-item">
+          <span class="link-icon">💻</span>
+          <div>
+            <div class="link-label">Baseline Code</div>
+            <a class="link-value" href="https://github.com/zeroQiaoba/MERTools" target="_blank">https://github.com/zeroQiaoba/MERTools</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- References -->
+    <div class="ref-block">
+      <p>[1] Zheng Lian et al. MER 2023: Multi-label Learning, Modality Robustness, and Semi-supervised Learning. <em>Proceedings of the 31st ACM International Conference on Multimedia</em>, 2023.</p>
+      <p>[2] Zheng Lian et al. MER 2024: Semi-supervised Learning, Noise Robustness, and Open-vocabulary Multimodal Emotion Recognition. <em>Proceedings of the 2nd International Workshop on Multimodal and Responsible Affective Computing</em>, 2024.</p>
+      <p>[3] Zheng Lian et al. MER 2025: When Affective Computing Meets Large Language Models. <em>Proceedings of the 33rd ACM International Conference on Multimedia</em>, 2025.</p>
+      <p>[4] Zheng Lian et al. Explainable Multimodal Emotion Reasoning. arXiv:2306.15401, 2023.</p>
+      <p>[5] Zheng Lian et al. OV-MER: Towards Open-Vocabulary Multimodal Emotion Recognition. <em>Forty-second International Conference on Machine Learning (ICML)</em>, 2025.</p>
+      <p>[6] Zheng Lian et al. AffectGPT: A New Dataset, Model, and Benchmark for Emotion Understanding with Multimodal Large Language Models. <em>Forty-second International Conference on Machine Learning (ICML)</em>, 2025.</p>
+      <p>[7] Zheng Lian et al. EmoPrefer: Can Large Language Models Understand Human Emotion Preferences? <em>International Conference on Learning Representations (ICLR)</em>, 2026.</p>
+      <p>[8] Zheng Lian et al. AffectGPT-R1: Leveraging Reinforcement Learning for Open-Vocabulary Multimodal Emotion Recognition. arXiv:2508.01318, 2026.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Workshop ─────────────────────────────────────────── -->
+<section id="workshop">
+  <div class="container">
+    <span class="section-label">MRAC2026 Workshop @ ACM MM</span>
+    <h2 class="section-title">Workshop Topics &amp; Submission</h2>
+    <div class="section-line"></div>
+
+    <div class="workshop-grid">
+      <div class="info-card">
+        <h3>🎯 Research Topics</h3>
+        <ul>
+          <li>Large-scale data generation / inexpensive annotation for Affective Computing</li>
+          <li>Generative AI for Affective Computing using multimodal signals</li>
+          <li>Multi-modal methods for emotion recognition</li>
+          <li>Privacy-preserving large-scale emotion recognition in the wild</li>
+          <li>Affective Computing in education, entertainment &amp; healthcare</li>
+          <li>Explainable or Privacy-Preserving AI in affective computing</li>
+          <li>Semi-/weak-/un-/self-supervised learning for Affective Computing</li>
+          <li>Physiological signal-based emotion recognition (EEG, fNIRS, etc.)</li>
+          <li>Dyadic and group emotion recognition in interaction scenarios</li>
+          <li>Reward modeling and preference learning for emotion understanding</li>
+        </ul>
+      </div>
+
+      <div class="info-card">
+        <h3>📋 Submission Guidelines</h3>
+        <p><strong>Format:</strong> ACM double-column template (<a href="https://2026.acmmm.org/" target="_blank">paper template</a>). Double-blind review — anonymize all author information.</p>
+        <p><strong>Length:</strong></p>
+        <ul>
+          <li>Option A: 4 pages + 1-page references</li>
+          <li>Option B: 8 pages + up to 2-page references</li>
+        </ul>
+        <p><strong>Review:</strong> All papers peer-reviewed; accepted papers published in the ACM Digital Library.</p>
+  
+      </div>
+    </div>
+
+    <div class="workshop-cta">
+      <div>
+        <h3>Submit Your Paper to MRAC2026</h3>
+        <p>Challenge solutions and any work on multimodal affective computing are welcome.</p>
+      </div>
+      <span class="btn btn-primary" style="white-space:nowrap; opacity:.6; cursor:default;">Coming Soon</span>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Schedule ─────────────────────────────────────────── -->
+<section id="schedule">
+  <div class="container">
+    <span class="section-label">Important Dates</span>
+    <h2 class="section-title">Schedule</h2>
+    <div class="section-line"></div>
+    <p style="font-size:.9rem; color:var(--muted); margin-bottom:32px;">All deadlines at 23:59 Anywhere on Earth (AoE).</p>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Apr 30, 2026</div>
+        <div class="tl-text">Data, baseline paper &amp; code available</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jun 26, 2026</div>
+        <div class="tl-text">Results submission opens</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jul 13, 2026</div>
+        <div class="tl-text">Results submission deadline</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jul 22, 2026</div>
+        <div class="tl-text">Paper submission deadline</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jul 30, 2026</div>
+        <div class="tl-text">Paper acceptance notification</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Aug 06, 2026</div>
+        <div class="tl-text">Camera-ready paper deadline</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Nov 10–14, 2026</div>
+        <div class="tl-text">ACM Multimedia 2026 — Rio de Janeiro, Brazil</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Speakers ──────────────────────────────────────────── -->
+<section id="speakers">
+  <div class="container">
+    <span class="section-label">Invited Talks</span>
+    <h2 class="section-title">Speakers</h2>
+    <div class="section-line"></div>
+
+    <div class="speakers-grid">
+      <div class="speaker-card">
+        <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">
+          <img src="./img/dimitrios.jpg" alt="Dimitrios Kollias" class="speaker-avatar">
+        </a>
+        <div class="speaker-name">
+          <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">Dimitrios Kollias</a>
+        </div>
+        <div class="speaker-role">Associate Professor<br>Queen Mary University of London</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Organization ──────────────────────────────────────── -->
+<section id="organization">
+  <div class="container">
+    <span class="section-label">People</span>
+    <h2 class="section-title">Organizers</h2>
+    <div class="section-line"></div>
+
+    <!-- Organisers -->
+    <div class="org-group">
+      <div class="org-group-title">General Chairs</div>
+      <div class="org-grid">
+
+        <div class="org-card">
+          <img src="./img/jhtao.png" class="org-avatar" alt="Jianhua Tao">
+          <div class="org-name"><a href="https://www.au.tsinghua.edu.cn/info/1080/3219.htm" target="_blank">Jianhua Tao</a></div>
+          <div class="org-affil">Tsinghua University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/lianzheng.jpg" class="org-avatar" alt="Zheng Lian">
+          <div class="org-name"><a href="https://zeroqiaoba.github.io/Homepage/" target="_blank">Zheng Lian</a></div>
+          <div class="org-affil">Institute of Automation, CAS</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/Björn W. Schuller.jpg" class="org-avatar" alt="Björn W. Schuller">
+          <div class="org-name"><a href="http://www.schuller.one/" target="_blank">Björn W. Schuller</a></div>
+          <div class="org-affil">TU Munich &amp; Imperial College London</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/Guoying_2023.jpg" class="org-avatar" alt="Guoying Zhao">
+          <div class="org-name"><a href="https://gyzhao-nm.github.io/Guoying/" target="_blank">Guoying Zhao</a></div>
+          <div class="org-affil">University of Oulu</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/Erik Cambria.jpg" class="org-avatar" alt="Erik Cambria">
+          <div class="org-name"><a href="https://sentic.net/team/" target="_blank">Erik Cambria</a></div>
+          <div class="org-affil">Nanyang Technological University</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Challenge Chairs -->
+    <div class="org-group">
+      <div class="org-group-title">Challenge Chairs</div>
+      <div class="org-grid">
+
+        <div class="org-card">
+          <img src="./img/xiaojiang.jpg" class="org-avatar" alt="Xiaojiang Peng">
+          <div class="org-name"><a href="https://pengxj.github.io/" target="_blank">Xiaojiang Peng</a></div>
+          <div class="org-affil">Shenzhen Technology University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/xukele.png" class="org-avatar" alt="Kele Xu">
+          <div class="org-name"><a href="https://kelelexu.github.io/" target="_blank">Kele Xu</a></div>
+          <div class="org-affil">National University of Defense Technology</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/people_mafei.png" class="org-avatar" alt="Fei Ma">
+          <div class="org-name"><a href="https://feima09.github.io/" target="_blank">Fei Ma</a></div>
+          <div class="org-affil">Guangdong Lab of Artificial Intelligence and Digital Economy (SZ)</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/ziyu.png" class="org-avatar" alt="Ziyu Jia">
+          <div class="org-name"><a href="https://scholar.google.com/citations?user=2FMVkQwAAAAJ" target="_blank">Ziyu Jia</a></div>
+          <div class="org-affil">Institute of Automation, CAS</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/people_cuilaizhong.jpg" class="org-avatar" alt="Laizhong Cui">
+          <div class="org-name"><a href="https://scholar.google.com/citations?user=cb8kYbUAAAAJ" target="_blank">Laizhong Cui</a></div>
+          <div class="org-affil">Shenzhen University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/zebang.jpg" class="org-avatar" alt="Zebang Cheng">
+          <div class="org-name"><a href="https://scholar.google.com/citations?user=-fG3MhYAAAAJ" target="_blank">Zebang Cheng</a></div>
+          <div class="org-affil">Shenzhen University</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Workshop Chairs -->
+    <div class="org-group">
+      <div class="org-group-title">Workshop Chairs</div>
+      <div class="org-grid">
+
+        <div class="org-card">
+          <img src="./img/yazhou.png" class="org-avatar" alt="Yazhou Zhang">
+          <div class="org-name"><a href="https://yzzhang2008.github.io/" target="_blank">Yazhou Zhang</a></div>
+          <div class="org-affil">Tianjin University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/xinliu.png" class="org-avatar" alt="Xin Liu">
+          <div class="org-name"><a href="https://sites.google.com/view/xinliu/" target="_blank">Xin Liu</a></div>
+          <div class="org-affil">Shanghai Jiao Tong University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/yanwang.png" class="org-avatar" alt="Yan Wang">
+          <div class="org-name"><a href="https://wangyanckxx.github.io/" target="_blank">Yan Wang</a></div>
+          <div class="org-affil">East China Normal University</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/yangliang.png" class="org-avatar" alt="Liang Yang">
+          <div class="org-name"><a href="https://scholar.google.com/citations?user=AIug9aEAAAAJ" target="_blank">Liang Yang</a></div>
+          <div class="org-affil">Dalian University of Technology</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/lijia.png" class="org-avatar" alt="Jia Li">
+          <div class="org-name"><a href="https://faculty.hfut.edu.cn/lijia/en/index.htm" target="_blank">Jia Li</a></div>
+          <div class="org-affil">Hefei University of Technology</div>
+        </div>
+
+        <div class="org-card">
+          <img src="./img/zhangfan.jpg" class="org-avatar" alt="Fan Zhang">
+          <div class="org-name"><a href="https://zfkarl.github.io/" target="_blank">Fan Zhang</a></div>
+          <div class="org-affil">CUHK</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Acknowledgement ──────────────────────────────────── -->
+<section id="acknowledgement">
+  <div class="container">
+    <span class="section-label">Acknowledgement</span>
+    <h2 class="section-title">Acknowledgement</h2>
+    <div class="section-line"></div>
+
+    <p class="section-desc">
+      We would like to express our sincere gratitude to the <strong>Dataset Chairs</strong> for their support during the dataset construction process:
+      Xiaojiang Peng (Shenzhen Technology University),
+      Kele Xu (National University of Defense Technology),
+      Fei Ma (Guangdong Lab of Artificial Intelligence and Digital Economy (SZ)),
+      Ziyu Jia (Institute of Automation, CAS),
+      Laizhong Cui (Shenzhen University),
+      and Zebang Cheng (Shenzhen University).
+      We also thank the members of our <strong>Annotation Team</strong> for their efforts:
+      Zelin Yan (Tongji University),
+      Liyi Liu (Tongji University),
+      Chenxi Zhou (National University of Defense Technology),
+      Yuan Cao (National University of Defense Technology),
+      Kaiyao Li (Shenzhen University),
+      Dawei Huang (Shenzhen University),
+      and Hanwen Du (Shenzhen University).
+      Finally, we thank the <strong>ACM Multimedia 2026 Challenge Chairs</strong> for giving us the opportunity to organize MER2026 at this premier conference.
+    </p>
+  </div>
+</section>
+
+
+<!-- ── Footer ───────────────────────────────────────────── -->
+<footer>
+  <p>
+    MER2026 Challenge &amp; MRAC2026 Workshop &nbsp;·&nbsp; ACM Multimedia 2026, Rio de Janeiro, Brazil<br>
+    Previous editions:
+    <a href="http://merchallenge.cn/" target="_blank">MER2023</a> ·
+    <a href="https://zeroqiaoba.github.io/MER2024-website/" target="_blank">MER2024</a> ·
+    <a href="https://zeroqiaoba.github.io/MER2025-website/" target="_blank">MER2025</a>
+  </p>
+</footer>
+
+<script>
+  // Clear URL hash on load so page always starts at top after refresh
+  if (window.location.hash) {
+    history.replaceState(null, null, window.location.pathname + window.location.search);
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
