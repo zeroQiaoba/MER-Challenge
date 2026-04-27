@@ -549,20 +549,28 @@
 
     .speakers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: 1fr;
       gap: 24px;
     }
 
     .speaker-card {
       background: var(--white);
       border-radius: var(--radius);
-      padding: 28px 20px;
-      text-align: center;
+      padding: 32px 36px;
+      display: flex;
+      gap: 36px;
+      align-items: flex-start;
       box-shadow: var(--shadow);
       transition: transform .25s, box-shadow .25s;
       border: 1px solid #e2e8f0;
     }
     .speaker-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+    .speaker-profile {
+      flex-shrink: 0;
+      text-align: center;
+      width: 150px;
+    }
 
     .speaker-avatar {
       width: 110px; height: 110px;
@@ -581,6 +589,32 @@
       font-size: .82rem;
       color: var(--muted);
       line-height: 1.5;
+    }
+
+    .speaker-talk {
+      flex: 1;
+      padding-top: 4px;
+    }
+    .talk-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .talk-label {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 6px;
+    }
+    .talk-abstract {
+      font-size: .9rem;
+      color: var(--mid);
+      line-height: 1.75;
+      text-align: justify;
     }
 
     /* ── Organizers ───────────────────────────────────── */
@@ -781,7 +815,7 @@
 
     <div class="news-list">
       <div class="news-item">
-        <span class="news-date">Apr 20, 2026</span>
+        <span class="news-date">Apr 30, 2026</span>
         <span class="news-text">We establish an initial website for <strong>MER2026 Challenge</strong> and <strong>MRAC2026 Workshop</strong>.</span>
       </div>
     </div>
@@ -1036,13 +1070,21 @@
 
     <div class="speakers-grid">
       <div class="speaker-card">
-        <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">
-          <img src="./img/dimitrios.jpg" alt="Dimitrios Kollias" class="speaker-avatar">
-        </a>
-        <div class="speaker-name">
-          <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">Dimitrios Kollias</a>
+        <div class="speaker-profile">
+          <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">
+            <img src="./img/dimitrios.jpg" alt="Dimitrios Kollias" class="speaker-avatar">
+          </a>
+          <div class="speaker-name">
+            <a href="https://sites.google.com/view/dimitrioskollias/home" target="_blank">Dimitrios Kollias</a>
+          </div>
+          <div class="speaker-role">Associate Professor<br>Queen Mary University of London</div>
         </div>
-        <div class="speaker-role">Associate Professor<br>Queen Mary University of London</div>
+        <div class="speaker-talk">
+          <div class="talk-label">Talk Title</div>
+          <div class="talk-title">From Affect Recognition to Behaviour-Centric AI: The Next Frontier in Multimodal AI</div>
+          <div class="talk-label">Abstract</div>
+          <div class="talk-abstract">Multimodal emotion recognition has achieved remarkable progress, yet it continues to face various limitations, including challenges in representation, generalisation and evaluation. In this keynote, I argue that the field is reaching a critical transition point: moving towards a more principled, behaviour-centric understanding of human affect. I will reflect on this shift through a series of works spanning large-scale in-the-wild datasets and unified modelling frameworks, highlighting both key advances and the structural challenges that remain. I will further discuss emerging directions that seek to ground multimodal emotion recognition in richer, semantically meaningful representations. Building on these insights, I will outline a forward-looking research agenda focused on dynamic affect modelling, generative facial behaviour and fair domain generalisation - pointing towards the next generation of multimodal AI systems that are more robust, interpretable and socially aware.</div>
+        </div>
       </div>
     </div>
   </div>
