@@ -209,7 +209,8 @@
       margin-bottom: 36px;
     }
 
-    .hero-buttons { display: flex; gap: 10px; flex-wrap: nowrap; }
+    .hero-buttons { display: flex; flex-direction: column; gap: 10px; }
+    .btn-row { display: flex; gap: 10px; flex-wrap: nowrap; }
 
     .btn {
       display: inline-flex;
@@ -421,7 +422,7 @@
     .challenge-links h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--navy); }
     .link-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
     .link-item {
@@ -753,11 +754,17 @@
         the 4th edition of the MER series, featuring four new tracks.
       </p>
       <div class="hero-buttons">
-        <a href="#challenge" class="btn btn-primary">Explore Tracks</a>
-        <a href="https://github.com/zeroQiaoba/MERTools" target="_blank" class="btn btn-outline">Baseline Code</a>
-        <a href="https://arxiv.org/abs/2604.19417" target="_blank" class="btn btn-outline">Baseline Paper</a>
-        <a href="https://huggingface.co/datasets/MERChallenge/MER2026" target="_blank" class="btn btn-outline">Register&amp;Data</a>
-        <span class="btn btn-outline" style="opacity:.6; cursor:default;">Paper Submission (Coming Soon)</span>
+        <div class="btn-row">
+          <a href="#challenge" class="btn btn-primary">Explore Tracks</a>
+          <a href="https://arxiv.org/abs/2604.19417" target="_blank" class="btn btn-outline">Baseline Paper</a>
+          <a href="https://github.com/zeroQiaoba/MERTools" target="_blank" class="btn btn-outline">Tracks 1-3 Baseline Code</a>
+          <a href="https://huggingface.co/datasets/MERChallenge/MER2026" target="_blank" class="btn btn-outline">Tracks 1-3 Register&amp;Data</a>
+        </div>
+        <div class="btn-row">
+          <a href="https://www.codabench.org/competitions/15981/" target="_blank" class="btn btn-outline">Track 4 Baseline Code</a>
+          <a href="https://huggingface.co/datasets/MER-PS/MER-PS-trainval" target="_blank" class="btn btn-outline">Track 4 Register&amp;Data</a>
+          <span class="btn btn-outline" style="opacity:.6; cursor:default;">Paper Submission (Coming Soon)</span>
+        </div>
       </div>
     </div>
   </div>
@@ -940,15 +947,29 @@
         <div class="link-item">
           <span class="link-icon">💻</span>
           <div>
-            <div class="link-label">Baseline Code</div>
+            <div class="link-label">Tracks 1-3 Baseline Code</div>
             <a class="link-value" href="https://github.com/zeroQiaoba/MERTools" target="_blank">https://github.com/zeroQiaoba/MERTools</a>
           </div>
         </div>
         <div class="link-item">
           <span class="link-icon">📦</span>
           <div>
-            <div class="link-label">Register&amp;Data</div>
+            <div class="link-label">Tracks 1-3 Register&amp;Data</div>
             <a class="link-value" href="https://huggingface.co/datasets/MERChallenge/MER2026" target="_blank">https://huggingface.co/datasets/MERChallenge/MER2026</a>
+          </div>
+        </div>
+        <div class="link-item">
+          <span class="link-icon">💻</span>
+          <div>
+            <div class="link-label">Track 4 Baseline Code</div>
+            <a class="link-value" href="https://www.codabench.org/competitions/15981/" target="_blank">https://www.codabench.org/competitions/15981/</a>
+          </div>
+        </div>
+        <div class="link-item">
+          <span class="link-icon">📦</span>
+          <div>
+            <div class="link-label">Track 4 Register&amp;Data</div>
+            <a class="link-value" href="https://huggingface.co/datasets/MER-PS/MER-PS-trainval" target="_blank">https://huggingface.co/datasets/MER-PS/MER-PS-trainval</a>
           </div>
         </div>
       </div>
@@ -1067,6 +1088,26 @@
     <span class="section-label">Invited Talks</span>
     <h2 class="section-title">Speakers</h2>
     <div class="section-line"></div>
+    
+     <div class="speakers-grid">
+      <div class="speaker-card">
+        <div class="speaker-profile">
+          <a href="https://www.jin-qin.com/" target="_blank">
+            <img src="./img/qinjin.jpg" alt="Qin Jin" class="speaker-avatar">
+          </a>
+          <div class="speaker-name">
+            <a href="https://www.jin-qin.com/" target="_blank">Qin Jin</a>
+          </div>
+          <div class="speaker-role">Full Professor<br>Renmin University of China</div>
+        </div>
+        <div class="speaker-talk">
+          <div class="talk-label">Talk Title</div>
+          <div class="talk-title">Coming Soon</div>
+          <div class="talk-label">Abstract</div>
+          <div class="talk-abstract">Coming Soon</div>
+        </div>
+      </div>
+    </div>
 
     <div class="speakers-grid">
       <div class="speaker-card">
