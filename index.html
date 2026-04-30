@@ -686,11 +686,14 @@
       background: var(--navy);
       color: rgba(255,255,255,.45);
       text-align: center;
-      padding: 28px 24px;
+      padding: 36px 24px;
       font-size: .85rem;
     }
     footer a { color: rgba(255,255,255,.6); }
     footer a:hover { color: var(--white); }
+    .footer-wechat { margin-top: 20px; display: inline-block; }
+    .footer-wechat img { width: 360px; height: auto; border-radius: 8px; border: 2px solid rgba(255,255,255,.15); }
+    .footer-wechat-label { margin-top: 6px; font-size: .78rem; color: rgba(255,255,255,.4); }
 
     /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 900px) {
@@ -1307,6 +1310,10 @@
     <a href="https://zeroqiaoba.github.io/MER2024-website/" target="_blank">MER2024</a> ·
     <a href="https://zeroqiaoba.github.io/MER2025-website/" target="_blank">MER2025</a>
   </p>
+  <div class="footer-wechat">
+    <img src="./img/wechat.jpg" alt="WeChat QR Code">
+    <div class="footer-wechat-label">WeChat</div>
+  </div>
 </footer>
 
 <script>
